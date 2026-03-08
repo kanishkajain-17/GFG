@@ -1,27 +1,29 @@
 class Solution {
-public:
-    int countPartitions(vector<int>& arr, int diff) {
-        int n = arr.size();
-        int totalSum = 0;
+  public:
+    int solve(vector<int>& nums, int x, int i, vector<vector<int>>& dp){
+        if(i == nums.size())
+            return x == 0;
         
-        for(int num : arr) 
-            totalSum += num;
-
-        if((totalSum + diff) % 2 != 0) 
+        if(dp[i][x] != -1)
+            return dp[i][x];
+        
+        int take = 0;
+        if(x >= nums[i])
+            take = solve(nums, x - nums[i], i + 1, dp);
+        int not_take = solve(nums, x, i + 1, dp);
+        
+        return dp[i][x] = take + not_take;
+    }
+    int countPartitions(vector<int>& nums, int diff) {
+        // Code here
+        int n = nums.size();
+        int S = accumulate(begin(nums), end(nums), 0);
+        S = S + diff;
+        if(S % 2 != 0)
             return 0;
-        int target = (totalSum + diff) / 2;
-        if(target <= 0) 
-            return 0;
-
-        vector<int> dp(target + 1, 0);
-            dp[0] = 1; 
-
-        for(int num : arr) {
-            for(int j = target; j >= num; j--) {
-                dp[j] += dp[j - num];
-            }
-        }
-
-        return dp[target];
+        int x = S / 2;
+        vector<vector<int>>dp(n + 1, vector<int>(x + 1, -1));
+        
+        return solve(nums, x, 0, dp);
     }
 };
