@@ -1,18 +1,18 @@
 class Solution {
   public:
     vector<string>ans;
-    void solve(string temp, int n){
-        if(temp.size() == n) {
+    void solve(int n, string temp){
+        if(temp.size() == n){
             ans.push_back(temp);
             return;
-        }   
-        solve(temp + '0', n);
-        solve(temp + '1', n);
-        
+        }
+        solve(n, temp + '0');
+        solve(n, temp + '1');
     }
     vector<string> binstr(int n) {
         // code here
-         solve("", n);
-         return ans;
+        string temp = "";
+        solve(n, temp);
+        return ans;
     }
 };
