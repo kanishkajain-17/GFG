@@ -1,91 +1,59 @@
 class minHeap {
-
-private:
-
+  private:
+    // Initialize your data members
     vector<int> heap;
+  public:
 
-    int parent(int i) {
-        return (i - 1) / 2;
-    }
-
-    int left(int i) {
-        return 2 * i + 1;
-    }
-
-    int right(int i) {
-        return 2 * i + 2;
-    }
-
-public:
-
-    // Insert element into heap
     void push(int x) {
-
-        // Add element at end
+        // Insert x into the heap
         heap.push_back(x);
-
-        int i = heap.size() - 1;
-
-        // Move upward until heap property is satisfied
-        while(i > 0 && heap[parent(i)] > heap[i]) {
-
-            swap(heap[parent(i)], heap[i]);
-
-            i = parent(i);
+        int n = heap.size() - 1;
+        
+        while (n > 0) {
+            int parent = (n - 1) / 2;
+            if(heap[parent] > heap[n]) {
+                swap(heap[parent], heap[n]);
+                n = parent;
+            }
+            else
+                break;
         }
     }
 
-    // Remove minimum element
     void pop() {
-
-        // If heap is empty
-        if(heap.empty())
-            return;
-
-        // Put last element at root
+        // Remove the top (minimum) element
         heap[0] = heap.back();
-
-        // Remove last element
         heap.pop_back();
-
         int i = 0;
-
-        // Heapify Down
-        while(true) {
-
-            int l = left(i);
-            int r = right(i);
-
+        
+        while (true) {
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            
             int smallest = i;
-
-            if(l < heap.size() && heap[l] < heap[smallest])
-                smallest = l;
-
-            if(r < heap.size() && heap[r] < heap[smallest])
-                smallest = r;
-
-            // Heap property satisfied
-            if(smallest == i)
+            
+            if(left < heap.size() && heap[left] < heap[smallest])
+                smallest = left;
+            if(right < heap.size() && heap[right] < heap[smallest])
+                smallest = right;
+            
+            if(smallest != i)
+                swap(heap[smallest], heap[i]);
+            else
                 break;
-
-            swap(heap[i], heap[smallest]);
-
             i = smallest;
         }
     }
 
-    // Return minimum element
     int peek() {
-
-        if(heap.empty())
+        // Return the top element or -1 if empty
+        if(heap.size() == 0)
             return -1;
-
         return heap[0];
     }
 
-    // Return size of heap
     int size() {
-
+        // Return the number of elements in the heap
         return heap.size();
     }
 };
