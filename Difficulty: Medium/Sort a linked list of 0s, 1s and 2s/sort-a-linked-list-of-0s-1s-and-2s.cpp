@@ -14,18 +14,34 @@ class Solution {
   public:
     Node* segregate(Node* head) {
         // code here
-        vector<int> sorted_values;
         Node* temp = head;
+        int zero_count = 0;
+        int one_count = 0;
+        int two_count = 0;
+        
         while (temp != NULL) {
-            sorted_values.push_back(temp->data);
+            if(temp->data == 0)
+                zero_count += 1;
+            else if(temp->data == 1) 
+                one_count += 1;
+            else
+                two_count += 1;
             temp = temp->next;
         }
-        sort(begin(sorted_values), end(sorted_values));
+        
         temp = head;
-        for (int i = 0; i < sorted_values.size(); i += 1) {
-            temp->data = sorted_values[i];
+        while (zero_count --) {
+            temp->data = 0;
             temp = temp->next;
-        }
+        } 
+        while (one_count --) {
+            temp->data = 1;
+            temp = temp->next;
+        } 
+        while (two_count --) {
+            temp->data = 2;
+            temp = temp->next;
+        } 
         return head;
     }
 };
