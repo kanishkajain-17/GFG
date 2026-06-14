@@ -15,7 +15,7 @@ class Solution {
         int n = arr.size();
         double ans = 0;
         double l = 0;
-        double r = *max_element(begin(arr), end(arr)); //O(log(sum(arr)))
+        double r = arr[n - 1] - arr[0]; //O(log(sum(arr)))
 
         while (l <= r) {
             
