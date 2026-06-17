@@ -1,23 +1,36 @@
 class Solution {
   public:
-    bool dfs(unordered_map<int, vector<int>> &adj, vector<bool> &visited, int u, int parent) {
+     bool bfs(unordered_map<int, vector<int>> &adj, vector<bool> &visited, int u, int parent) {
             
-            visited[u] = true;
+        queue<pair<int, int>> que;
+        que.push({u, parent});
+        
+        visited[u] = true;
+        
+        while (!que.empty()) {
+            pair<int, int> P = que.front();
+            int u = P.first;
+            int parent = P.second;
+            que.pop();
+            
             for (int &v : adj[u]) {
-                if(visited[v] == true){
+                
+                if(visited[v] == true) {
                     if(v != parent)
-                        
                         return true;
                 }
-                else
-                    if(dfs(adj, visited, v, u))
-                        return true;
+                else{
+                    visited[v] = true;
+                    que.push({v, u});
+                }
             }
-            return false;
         }
+        return false;
+     }
+           
     bool isCycle(int V, vector<vector<int>>& edges) {
         // Code here
-        unordered_map<int, vector<int>> adj;
+         unordered_map<int, vector<int>> adj;
         for (auto &e : edges) {
             int u = e[0];
             int v = e[1];
@@ -27,7 +40,7 @@ class Solution {
         vector<bool> visited(V, false);
         
         for (int i = 0; i < V; i ++) 
-            if(!visited[i] &&  dfs(adj, visited, i, -1))
+            if(!visited[i] &&  bfs(adj, visited, i, -1))
                 return true;
         return false;
     }
