@@ -1,37 +1,42 @@
 class Solution {
   public:
-     bool dfs(unordered_map<int, vector<int>> &adj, vector<bool> &visited, 
-        vector<bool> &inRecursion, int u) {
-            
-            visited[u] = true;
-            inRecursion[u] = true;
-            
-            for (int &v : adj[u]) {
-                if(visited[v] == true){
-                    if(inRecursion[v] == true)
-                         return true;
-                }
-                else
-                    if(!visited[v] && dfs(adj, visited, inRecursion, v))
-                        return true;
-            }
-            inRecursion[u] = false;
-            return false;
-        }
     bool isCyclic(int V, vector<vector<int>> &edges) {
         // code here
         unordered_map<int, vector<int>> adj;
+        vector<int> indegree(V);
+        queue<int> que;
+        int count = 0;
+        
         for (auto &e : edges) {
             int u = e[0];
             int v = e[1];
             adj[u].push_back(v);
+            indegree[v] += 1;
         }
-        int n = edges.size();
-        vector<bool> visited(n, false);
-        vector<bool> inRecursion(n, false);
-        for (int i = 0; i < n; i ++) 
-            if(!visited[i] &&  dfs(adj, visited, inRecursion, i))
-                return true;
-        return false;
+        
+        for (int i = 0; i < V; i += 1) {
+            if(indegree[i] == 0) {
+                que.push(i);
+                count += 1;
+            }
+        }
+        
+        while (!que.empty()) {
+            
+            int u = que.front();
+            que.pop();
+            
+            for (int &v : adj[u]) {
+                
+                indegree[v] -= 1;
+                
+                if(indegree[v] == 0) {
+                    count += 1;
+                    que.push(v);
+                }
+            }
+        }
+        
+        return !(count == V);
     }
 };
