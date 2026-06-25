@@ -1,18 +1,19 @@
-
-
 class Solution {
   public:
-    vector<int> leaders(vector<int>& nums) {
+    vector<int> leaders(vector<int>& arr) {
         // code here
-        int n = nums.size();
-        vector<int>ans;
-        ans.push_back(nums[n - 1]);
-        for(int i = n - 1; i >= 0; i--){
-            if(nums[i - 1] >= nums[i] && nums[i - 1] >= ans.back())
-                ans.push_back(nums[i - 1]);
+        int n = arr.size();
+        vector<int> ans;
+        
+        ans.push_back(arr[n - 1]);
+        
+        for (int i = n - 2; i >= 0; i -= 1) {
+            
+            if(arr[i] >= ans.back()) 
+                ans.push_back(arr[i]);
         }
+        
         reverse(begin(ans), end(ans));
         return ans;
-        
     }
 };
