@@ -1,20 +1,23 @@
 class Solution {
   public:
-    long subarrayXor(vector<int> & nums, int k) {
+    long subarrayXor(vector<int> &arr, int k) {
         // code here
-        //count find karna hai, isly i nahi daal rahe bas plus kar rahe
-        int n = nums.size();
-        unordered_map<int, int>mp;
-        mp.insert({0, 1});
-        int Xor = 0;
+        int n = arr.size();
+        unordered_map<int, int> mp;
         int count = 0;
-        for(int i = 0; i < n; i++){
-            Xor = Xor ^ nums[i];
+        int XOR = 0;
+        
+        for (int i = 0; i < n; i ++) {
             
-            if(mp.find(Xor ^ k) != mp.end())
-                count += mp[Xor ^ k];
+            XOR ^= arr[i];
             
-            mp[Xor]++;
+            if(XOR == k)
+                count += 1;
+            
+            if(mp.find(k ^ XOR) != mp.end()) {
+                count += mp[k ^ XOR];
+            }
+            mp[XOR] ++;
         }
         return count;
     }
