@@ -1,14 +1,15 @@
-// User function Template for C++
 class Solution {
   public:
-    int findCeil(vector<int>& nums, int x) {
+    int findCeil(vector<int>& arr, int x) {
         // code here
-        int n = nums.size();
+        int n = arr.size();
         int l = 0, r = n - 1;
         int ans = -1;
+        
         while (l <= r) {
-            int mid = l + (r - l) / 2;
-            if(nums[mid] >= x){
+            int mid = l + (r  -l) / 2;
+            
+            if(arr[mid] >= x) {
                 ans = mid;
                 r = mid - 1;
             }
