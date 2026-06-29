@@ -1,13 +1,15 @@
 class Solution {
   public:
-    int findFloor(vector<int>& nums, int target) {
+    int findFloor(vector<int>& arr, int x) {
         // code here
+        int n = arr.size();
         int ans = -1;
-        int n = nums.size();
         int l = 0, r = n - 1;
+        
         while (l <= r) {
             int mid = l + (r - l) / 2;
-            if(nums[mid] <= target) {
+            
+            if(arr[mid] <= x) {
                 ans = mid;
                 l = mid + 1;
             }
