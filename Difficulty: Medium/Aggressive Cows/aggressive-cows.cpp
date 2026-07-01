@@ -1,18 +1,22 @@
 class Solution {
   public:
-    bool canPlaced(vector<int> &stalls, int k, int mid) {
-        int lastStall = stalls[0];
-        int cows = 1;
+    bool canPlaced(vector<int> &stalls, int mid, int k) {
         
-        for (int i = 1; i < stalls.size(); i += 1) {
+        int cows = 1;
+        int lastStall = stalls[0];
+        int n = stalls.size();
+        
+        for (int i = 1; i < n; i ++) {
+            
             if(stalls[i] - lastStall >= mid) {
-                cows += 1;
                 lastStall = stalls[i];
+                cows += 1;
             }
-            if(cows >= k)
-                return true;
+            
+            if(cows > k)
+                break;
         }
-        return false;
+        return cows >= k;
     }
     int aggressiveCows(vector<int> &stalls, int k) {
         // code here
@@ -20,18 +24,15 @@ class Solution {
         int n = stalls.size();
         int l = 1;
         int r = stalls[n - 1] - stalls[0];
-        //The maximum possible minimum distance can never exceed:
-        //because that's the distance between the leftmost and rightmost stall.
-        
-        int minDistance = 0;
         int ans = 0;
-        //2 cows ke bich ka min distance 1 toh rahega he 
-        //isly l = 1
+        
         while (l <= r) {
+            
             int mid = l + (r - l) / 2;
-            if(canPlaced(stalls, k, mid)){
+            
+            if(canPlaced(stalls, mid, k)){
                 ans = mid;
-                l = mid + 1; //this time we need to find larger distances
+                l = mid + 1;
             }
             else
                 r = mid - 1;
