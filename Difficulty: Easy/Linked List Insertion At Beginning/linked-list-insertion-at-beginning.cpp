@@ -14,17 +14,16 @@ class Node {
 class Solution {
   public:
     Node *insertAtFront(Node *head, int x) {
+        Node* node = new Node(x);
+        
         // Code here
-        if(head == NULL){
-            Node *node = new Node(x);
-            head = node;
-            head->next = NULL;
+        if(head == nullptr)
             return node;
-        }
-        Node *node = new Node(x);
+        
+        
         node->next = head;
         head = node;
-        return node;
-            
+        
+        return head;
     }
 };
