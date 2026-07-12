@@ -1,13 +1,14 @@
-/*
+/* Structure of doubly linked list node
 class Node {
   public:
     int data;
     Node *next;
     Node *prev;
+
     Node(int val) {
         data = val;
-        next = NULL;
-        prev = NULL;
+        next = nullptr;
+        prev = nullptr;
     }
 };
 
@@ -16,16 +17,22 @@ class Solution {
   public:
     Node *reverse(Node *head) {
         // code here
-        Node* prevv = NULL;
-        Node* cur = head;
-        Node* nextt = NULL;
+        
+        Node* prev = NULL;
+        Node *cur = head;
+        Node *next = NULL;
         
         while (cur != NULL) {
-            nextt = cur->next;
-            cur->next = prevv;
-            prevv = cur;
-            cur = nextt;
+            
+            next = cur->next;
+            
+            cur->next = prev;
+            cur->prev = next;
+            
+            prev = cur;
+            cur = next;
         }
-        return prevv;
+        
+        return prev;
     }
 };
