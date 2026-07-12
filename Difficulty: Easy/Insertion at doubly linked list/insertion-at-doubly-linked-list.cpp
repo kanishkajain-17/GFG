@@ -15,21 +15,34 @@ class Node {
 class Solution {
   public:
     Node *insertAtPos(Node *head, int p, int x) {
-        Node* newNode = new Node(x);
+        // code here
+        Node *node = new Node(x);
         
-        Node* temp = head;
+        if(head == NULL)
+            return node;
         
-        for (int i = 0; i < p; i += 1)
-            temp = temp->next;
+        Node *prev = NULL;
+        Node *temp = head;
             
-        if(temp->next != NULL)
-            temp->next->prev = newNode;
-        newNode->next = temp->next;
-        newNode->prev = temp;
-        temp->next = newNode;
+        for (int i = 0; i <= p; i ++) {
+            
+            prev = temp;
+            temp = temp->next;
+        }
+        
+        if(temp == NULL) {
+            
+            prev->next = node;
+            node->prev = prev;
+            
+            return head;
+        }
+        
+        node->next = temp;
+        temp->prev = node;
+        prev->next = node;
+        node->prev = prev;
         
         return head;
-        
-        
     }
 };
