@@ -3,14 +3,12 @@ class Solution {
     int celebrity(vector<vector<int>>& mat) {
         // code here
         int n = mat.size();
-        stack<int>st;
+        stack<int> st;
         
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i ++)
             st.push(i);
-            
-        while(st.size() > 1){ //can't do !st.empty() bcz we have to
-        //pop 2 times toh size 1 se bada hona chiaye, tabhi 2 pop ho sakte hau 
         
+        while (st.size() > 1) {
             
             int i = st.top();
             st.pop();
@@ -18,16 +16,20 @@ class Solution {
             int j = st.top();
             st.pop();
             
-            if(mat[i][j] == 0)
-                st.push(i);
-            else
+            if(mat[i][j] == 1)
                 st.push(j);
+            else
+                st.push(i);
         }
         int celeb = st.top();
-        for(int i = 0; i < n; i++){
+        st.pop();
+        
+        for (int i = 0; i < n; i ++) {
+            
             if(i != celeb && (mat[i][celeb] == 0 || mat[celeb][i] == 1))
                 return -1;
         }
-       return celeb;
+        
+        return celeb;
     }
 };
