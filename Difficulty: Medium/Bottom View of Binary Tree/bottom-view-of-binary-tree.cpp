@@ -1,13 +1,14 @@
 /*
+Definition for Node
 class Node {
 public:
     int data;
     Node* left;
     Node* right;
 
-    Node(int x) {
-        data = x;
-        left = right = NULL;
+    Node(int val) {
+        data = val;
+        left = right = nullptr;
     }
 };
 */
@@ -16,30 +17,35 @@ class Solution {
   public:
     vector<int> bottomView(Node *root) {
         // code here
-        if(!root)
-            return {};
-        vector<int>ans;
-        queue<pair<Node*, int>>q;
-        q.push({root, 0});
-        map<int, int>mp;
+         queue<pair<Node*, int>> que;
+        que.push({root, 0});
         
-        while(!q.empty()){
-            auto it = q.front();
-            q.pop();
+        map<int,int> mp;
+        
+        while (!que.empty()) {
             
-            Node* node = it.first;
-            int level = it.second;
+            auto P = que.front();
+            que.pop();
             
-            mp[level] = node->data;
+            Node* node = P.first;
+            int col = P.second;
             
+           
+            mp[col] = node->data;
+            
+                
             if(node->left != NULL)
-                q.push({node->left, level - 1});
+                que.push({node->left, col - 1});
                 
             if(node->right != NULL)
-                q.push({node->right, level + 1});
+                que.push({node->right, col + 1});
         }
-        for(auto it : mp)
+        
+        vector<int> ans;
+        for (auto &it : mp) {
+            
             ans.push_back(it.second);
+        }
         return ans;
     }
 };
