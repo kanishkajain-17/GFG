@@ -1,19 +1,13 @@
-/*
-
+/* Structure of a Tree Node
 class Node {
 public:
     int data;
-    Node* left;
-    Node* right;
-
+    Node* left, *right;
     Node(int val) {
         data = val;
-        left = nullptr;
-        right = nullptr;
+        left = right = nullptr;
     }
-};
-
-*/
+}; */
 
 class Solution {
   public:
@@ -21,31 +15,33 @@ class Solution {
         // code here
         if(!root)
             return true;
-        queue<Node*>q;
-        q.push(root);
         
+        queue<Node*> que;
+        que.push(root);
         
-        while(!q.empty()){
-            Node* node = q.front();
-            q.pop();
+        while (!que.empty()) {
+            Node* node = que.front();
+            que.pop();
             
             if(node->left == NULL && node->right == NULL)
                 return true;
-            
+                
             int sum = 0;
+            
             if(node->left != NULL)
                 sum += node->left->data;
+            
             if(node->right != NULL)
                 sum += node->right->data;
-                
+            
             if(node->data != sum)
                 return false;
-                
             
             if(node->left != NULL)
-                q.push(node->left);
+                que.push(node->left);
+            
             if(node->right != NULL)
-                q.push(node->right);
+                que.push(node->right);
         }
         return true;
     }
