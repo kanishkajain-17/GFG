@@ -1,26 +1,23 @@
 class Solution {
   public:
-    int minCost(vector<int>& h) {
+    int minCost(vector<int>& height) {
         // Code here
-        int n = h.size();
-        int ans = 0;
-        int prevPrev = 0;
+        int n = height.size();
         int prev = 0;
-        int curr = 0;
+        int prev2 = 0;
         
-        for(int i = 1; i < n; i++){
-            int first = prev + abs(h[i - 1] -  h[i]);
-        
-            int second =  INT_MAX;
+        for (int i = 1; i < n; i++) {
+            
+            int fs = prev + abs(height[i] - height[i - 1]);
+            
+            int ss = INT_MAX;
             if(i > 1)
-                second = prevPrev + abs(h[i] -  h[i - 2]);
+                ss = prev2 + abs(height[i] - height[i - 2]);
             
-            curr = min(first, second);
-            
-            prevPrev = prev;
-            prev = curr;
+            int cur = min(fs, ss);
+            prev2 = prev;
+            prev = cur;
         }
         return prev;
-        
     }
 };
